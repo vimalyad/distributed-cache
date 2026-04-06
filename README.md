@@ -214,6 +214,15 @@ classDiagram
     CapacityAlertObserver --> AlertService : uses
     EvictionLogger --> Logger : uses
     WriteBackObserver --> OriginStore : uses
+
+    %% ==========================================
+    %% FACTORY / WIRING (Added)
+    %% ==========================================
+    class CacheSystemFactory {
+        +buildDefault(...) CacheClient
+    }
+    CacheSystemFactory ..> DistributedCacheClient : creates
+    CacheSystemFactory ..> LocalCacheNode : creates
 ```
 
 ---
