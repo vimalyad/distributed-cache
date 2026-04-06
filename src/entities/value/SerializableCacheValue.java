@@ -2,8 +2,6 @@ package entities.value;
 
 import java.io.Serializable;
 
-// the purpose of serializable is for transferring data models like objects or JSONs etc
-// here we can have anything as the data type of CacheValue
 public class SerializableCacheValue<V extends Serializable> implements CacheValue<V> {
     private final V value;
     private final long estimatedSizeBytes;

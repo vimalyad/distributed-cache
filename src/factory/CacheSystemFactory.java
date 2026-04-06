@@ -32,27 +32,23 @@ import java.util.concurrent.Executors;
 
 public class CacheSystemFactory {
 
-    public <K, V> CacheClient<K, V> buildDefault(int nodeCount, int capacityPerNode, int virtualNodesPerPhysical,
+    public static <K, V> CacheClient<K, V> buildDefault(int nodeCount, int capacityPerNode, int virtualNodesPerPhysical,
                                                  int defaultTtlSeconds, OriginStore<K, V> originStore,
                                                  Logger logger, AlertService alertService) {
 
-        // 1. Core Policies
         DistributionPolicy<K> distributionPolicy = new ConsistentHashRouter<>(virtualNodesPerPhysical);
         NodeRegistry<K> nodeRegistry = new InMemoryNodeRegistry<>(distributionPolicy);
         RequestCollapser<K, V> collapser = new FutureBasedCollapser<>();
         PrefetchPolicy<K, V> prefetchPolicy = new NoPrefetch<>();
 
-        // Dummy prefetch loader since policy is NoPrefetch
         PrefetchLoader<K, V> prefetchLoader = keys -> Collections.emptyMap();
 
-        // 2. Events & Observers
         SynchronousEventPublisher<K, V> publisher = new SynchronousEventPublisher<>();
         publisher.register(new EvictionLogger<>(logger));
         publisher.register(new MetricsObserver<>());
         publisher.register(new WriteBackObserver<>(originStore));
         publisher.register(new CapacityAlertObserver<>(alertService, 100)); // 100 per minute threshold
 
-        // 3. Initialize Nodes
         for (int i = 0; i < nodeCount; i++) {
             CacheStore<K, V> store = new LRUCacheStore<>();
             EvictionPolicy<K, V> evictionPolicy = new LRUEvictionPolicy<>();
@@ -62,16 +58,17 @@ public class CacheSystemFactory {
                     "node-" + i, capacityPerNode, store, evictionPolicy, ttlManager, publisher
             );
 
-            ttlManager.setNode(node); // Wire circular dependency safely after construction
+            ttlManager.setNode(node);
             nodeRegistry.register(node);
         }
 
         ExecutorService prefetchExecutor = Executors.newFixedThreadPool(2);
 
-        // 4. Client
         return new DistributedCacheClient<>(
                 distributionPolicy, collapser, prefetchPolicy, prefetchLoader,
                 originStore, publisher, prefetchExecutor
         );
     }
+
+    private CacheSystemFactory(){}
 }

@@ -9,7 +9,7 @@ public class ScheduledTTLManager<K> implements TTLManager<K> {
     private final ConcurrentHashMap<CacheKey<K>, Long> expiryMap = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<CacheKey<K>, ScheduledFuture<?>> futures = new ConcurrentHashMap<>();
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-    private CacheNode<K, ?> node; // Lazy injection or setter to avoid circular dependency
+    private CacheNode<K, ?> node;
 
     public void setNode(CacheNode<K, ?> node) {
         this.node = node;

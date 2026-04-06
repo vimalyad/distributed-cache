@@ -40,7 +40,6 @@ public class DistributedCacheClient<K, V> implements CacheClient<K, V> {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public Optional<CacheValue<V>> get(CacheKey<K> key) {
         CacheNode<K, V> node = (CacheNode<K, V>) distributionPolicy.route(key);
         Optional<CacheEntry<K, V>> entryOpt = node.get(key);
@@ -61,7 +60,6 @@ public class DistributedCacheClient<K, V> implements CacheClient<K, V> {
             return Optional.of(entryOpt.get().value());
         }
 
-        // Cache Miss
         CacheValue<V> value = requestCollapser.getOrLoad(key, originStore::load);
         if (value != null) {
             node.put(new DefaultCacheEntry<>(key, value, System.currentTimeMillis(), Long.MAX_VALUE));
@@ -70,7 +68,6 @@ public class DistributedCacheClient<K, V> implements CacheClient<K, V> {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void put(CacheKey<K> key, CacheValue<V> value, int ttlSeconds) {
         CacheNode<K, V> node = (CacheNode<K, V>) distributionPolicy.route(key);
         long expiresAtMs = ttlSeconds > 0 ? System.currentTimeMillis() + ttlSeconds * 1000L : Long.MAX_VALUE;
@@ -79,7 +76,6 @@ public class DistributedCacheClient<K, V> implements CacheClient<K, V> {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void delete(CacheKey<K> key) {
         CacheNode<K, V> node = (CacheNode<K, V>) distributionPolicy.route(key);
         node.delete(key);

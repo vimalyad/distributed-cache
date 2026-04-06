@@ -6,9 +6,7 @@ import observers.CacheObserver;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-// the publishers will be following default synchronous nature
 public class SynchronousEventPublisher<K, V> implements CacheEventPublisher<K, V> {
-    // thread safety for adding and removing listeners
     private final List<CacheObserver<K, V>> observers = new CopyOnWriteArrayList<>();
 
     @Override
