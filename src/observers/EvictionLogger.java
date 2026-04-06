@@ -1,5 +1,6 @@
 package observers;
 
+import utils.Logger;
 import entities.event.CacheEvent;
 import enums.CacheEventType;
 
