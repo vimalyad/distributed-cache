@@ -2,6 +2,7 @@ package observers;
 
 import entities.event.CacheEvent;
 import enums.CacheEventType;
+import services.alert.AlertService;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
