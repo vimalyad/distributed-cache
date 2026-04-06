@@ -14,6 +14,4 @@ public interface CacheStore<K, V> {
     void remove(CacheKey<K> key);
 
     int size();
-
-    Collection<CacheKey<K>> keys();
 }

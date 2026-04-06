@@ -8,9 +8,5 @@ public interface CacheEntry<K, V> {
 
     CacheValue<V> value();
 
-    long createdAt();
-
     long expiredAt();
-
-    boolean isExpired(long currentTime);
 }

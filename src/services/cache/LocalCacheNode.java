@@ -42,11 +42,6 @@ public class LocalCacheNode<K, V> implements CacheNode<K, V> {
     }
 
     @Override
-    public int capacity() {
-        return capacity;
-    }
-
-    @Override
     public boolean isHealthy() {
         return healthy;
     }

@@ -16,7 +16,5 @@ public interface CacheNode<K, V> {
 
     int size();
 
-    int capacity();
-
     boolean isHealthy();
 }

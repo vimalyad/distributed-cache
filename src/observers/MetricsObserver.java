@@ -14,10 +14,4 @@ public class MetricsObserver<K, V> implements CacheObserver<K, V> {
         if (event.getType() == CacheEventType.ON_HIT) hitCount.incrementAndGet();
         else if (event.getType() == CacheEventType.ON_MISS) missCount.incrementAndGet();
     }
-
-    public double hitRate() {
-        long hits = hitCount.get();
-        long total = hits + missCount.get();
-        return total == 0 ? 0.0 : (double) hits / total;
-    }
 }

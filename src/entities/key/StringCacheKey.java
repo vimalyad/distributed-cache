@@ -9,14 +9,7 @@ public class StringCacheKey implements CacheKey<String> {
     }
 
     @Override
-    public String rawKey() {
-        return key;
-    }
-
-    @Override
     public long getHash() {
-        // FNV-1a hash simulation
-        // stability across JVMs
         long hash = 0xcbf29ce484222325L;
         for (byte b : key.getBytes()) {
             hash ^= b;

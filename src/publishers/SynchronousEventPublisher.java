@@ -15,11 +15,6 @@ public class SynchronousEventPublisher<K, V> implements CacheEventPublisher<K, V
     }
 
     @Override
-    public void unregister(CacheObserver<K, V> observer) {
-        observers.remove(observer);
-    }
-
-    @Override
     public void publish(CacheEvent<K, V> event) {
         for (CacheObserver<K, V> observer : observers) {
             observer.onEvent(event);

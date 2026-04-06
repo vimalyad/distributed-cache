@@ -11,9 +11,4 @@ public class StringCacheValue implements CacheValue<String> {
     public String getValue() {
         return value;
     }
-
-    @Override
-    public long sizeBytes() {
-        return value == null ? 0 : value.length() * 2L;
-    }
 }

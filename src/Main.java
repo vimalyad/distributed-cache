@@ -147,11 +147,6 @@ public class Main {
         public void info(String message) {
             System.out.println("   [LOGGER-INFO] " + message);
         }
-
-        @Override
-        public void warn(String message) {
-            System.out.println("   [LOGGER-WARN] " + message);
-        }
     }
 
     static class ConsoleAlertService implements AlertService {

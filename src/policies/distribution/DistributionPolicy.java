@@ -9,8 +9,4 @@ public interface DistributionPolicy<K> {
     CacheNode<K, ?> route(CacheKey<K> key);
 
     void addNode(CacheNode<K, ?> node);
-
-    void removeNode(String nodeId);
-
-    List<CacheNode<K, ?>> allNodes();
 }

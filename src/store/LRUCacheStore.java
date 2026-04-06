@@ -59,11 +59,6 @@ public class LRUCacheStore<K, V> implements CacheStore<K, V> {
         return map.size();
     }
 
-    @Override
-    public Collection<CacheKey<K>> keys() {
-        return map.keySet();
-    }
-
     private void moveToHead(Node<K, V> node) {
         removeNode(node);
         addToHead(node);
